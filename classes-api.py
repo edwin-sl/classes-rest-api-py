@@ -31,11 +31,13 @@ def find_class(class_id):
 @app.route('/api/classes', methods=['GET'])
 def get_classes():
     """Get all classes"""
+    print(f'{datetime.now()} - GET /api/classes')
     return jsonify(classes)
 
 @app.route('/api/classes/<int:class_id>', methods=['GET'])
 def get_class(class_id):
     """Get a specific class by ID"""
+    print(f'{datetime.now()} - GET /api/classes/{class_id}')
     class_item = find_class(class_id)
     if class_item is None:
         return jsonify({"error": "Class not found"}), 404
@@ -44,6 +46,7 @@ def get_class(class_id):
 @app.route('/api/classes', methods=['POST'])
 def create_class():
     """Create a new class"""
+    print(f'{datetime.now()} - POST /api/classes')
     if not request.is_json:
         return jsonify({"error": "Content-Type must be application/json"}), 400
 
@@ -74,6 +77,7 @@ def create_class():
 @app.route('/api/classes/<int:class_id>', methods=['PUT'])
 def update_class(class_id):
     """Update an existing class"""
+    print(f'{datetime.now()} - PUT /api/classes/{class_id}')
     if not request.is_json:
         return jsonify({"error": "Content-Type must be application/json"}), 400
 
@@ -97,6 +101,7 @@ def update_class(class_id):
 @app.route('/api/classes/<int:class_id>', methods=['DELETE'])
 def delete_class(class_id):
     """Delete a class"""
+    print(f'{datetime.now()} - DELETE /api/classes/{class_id}')
     class_item = find_class(class_id)
     if class_item is None:
         return jsonify({"error": "Class not found"}), 404
@@ -120,4 +125,4 @@ def search_classes():
     return jsonify(results)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
